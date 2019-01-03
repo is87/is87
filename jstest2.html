@@ -18,7 +18,7 @@ client.open('GET', 'verbtest.csv');
 client.onreadystatechange = function() {
     if(client.readyState === 4 && client.status === 200) {
    document.getElementById("box").innerHTML =  client.responseText;
-   alert(client.responseText.indexOf("\t"));
+   alert(client.responseText.indexOf("\t")+" - "+client.responseText.indexOf("\n"));
     }
 }
 client.send();
