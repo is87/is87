@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8"/>
+</head>
+<body style="background-color: #ffffff; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
+    <div style="width:100%; background-color: #373433; padding:10px; padding-left:20px;">
+        <h2 style="color:#fff; margin:0;">Persian verbs</h2>
+    </div>
+
+    <button id="latinBox" style="background-color:#ccc; width:fit-content; padding: 10px; margin: 20px; float: right;" onclick="toggleLatin();">Latinization on</button>
+    <div id="pointBox" style="font-size:30pt; margin:20px;">0/0 (0%)</div>
+    
+    <center>
+            <!--<button style="font-size: 30pt;" onclick="cheat()">Fuska</button><br><br><br>-->
+        <div id="txt2" style="font-size: 50pt;"></div>
+        <button id="b1" style="font-size: 50pt; margin: 20px; width: 80%;" value="0" onclick="check(0);">Word 1</button><br/>
+        <button id="b2" style="font-size: 50pt; margin: 20px; width: 80%;" value="1" onclick="check(1);">Word 2</button><br/>
+        <button id="b3" style="font-size: 50pt; margin: 20px; width: 80%;" value="2" onclick="check(2);">Word 3</button><br/>
+        <button id="b4" style="font-size: 50pt; margin: 20px; width: 80%;" value="3" onclick="check(3);">Word 4</button>
+    <br><br><button style="font-size: 50pt; visibility:hidden;" id="btn" onclick="start()">Next word</button>
+    <br><br><div style="background-color:#a09996; width: 80%; height: 50px; padding: 5px;" align="left">
+        <div id="wrong" style="background-color:#501a13; width: 100%; height: 100%; float: right;"></div>
+        <div id="right" style="background-color:#135013; width: 0%; height: 100%;"></div>
+            
+    </div>
+</center>
+
+    <script>
+        var rounds = 0;
+        var correct = 0;
+        var siffra;
+        var latinHelp = true;
+        var varr = [];
+        var bt =[document.getElementById("b1"), document.getElementById("b2"), document.getElementById("b3"), document.getElementById("b4")];
+
+        function toggleLatin(){
+            if (latinHelp){
+                document.getElementById("latinBox").innerHTML = "Latinization off";
+            }else{
+                document.getElementById("latinBox").innerHTML = "Latinization on";
+            }
+            latinHelp = !latinHelp;
+            document.getElementById("txt2").innerHTML = varr[siffra].Persian;
+            if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
+        }
+
+		function check(nr){
+			rounds++;
+			if(nr == siffra){
+                document.getElementById("txt2").style.color = "#339933";
+                correct++;
+			}else{
+				document.getElementById("txt2").style.color = "#993333";
+			}
+            for(i=0;i<4;i++){
+                bt[i].disabled = true;
+                bt[i].style.color = "#999";
+            }
+            bt[nr].style.color = "#993333";
+            bt[siffra].style.color = "#339933";
+            document.getElementById("btn").style.visibility = "visible";
+            percentage = Math.round(correct/rounds*100);
+            document.getElementById("pointBox").innerHTML = correct +"/"+rounds + " ("+percentage+"%)";
+            document.getElementById("right").style.width = percentage+"%";
+            document.getElementById("wrong").style.width = (100-percentage)+"%";
+		}
+
+		function start(){
+			for(i=0;i<4;i++){
+                bt[i].disabled = false;
+                bt[i].style.color = "#000000";
+            }
+            document.getElementById("txt2").style.color = "#4a6da7";
+			document.getElementById("btn").style.visibility = "hidden";
+			
+            varr = shuffle(verb);
+            siffra = Math.floor((Math.random() * 4));
+            document.getElementById("txt2").innerHTML = varr[siffra].Persian;
+            if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
+            document.getElementById("b1").innerHTML = varr[0].English;
+            document.getElementById("b2").innerHTML = varr[1].English;
+            document.getElementById("b3").innerHTML = varr[2].English;
+            document.getElementById("b4").innerHTML = varr[3].English;
+			
+		}
+
+        function shuffle(a) {
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+        
+        var verb = [
+  {
+    "Persian": "آمدن",
+    "Pronunciation": "âmadan",
+    "English": "to come"
+  },
+  {
+    "Persian": "انداختن",
+    "Pronunciation": "andâkhtan",
+    "English": "to throw"
+  },
+  {
+    "Persian": "ایستادن",
+    "Pronunciation": "istâdan",
+    "English": "to stand"
+  },
+  {
+    "Persian": "آوردن",
+    "Pronunciation": "âvardan",
+    "English": "to bring"
+  },
+  {
+    "Persian": "باختن",
+    "Pronunciation": "bâkhtan",
+    "English": "to lose (not win)"
+  },
+  {
+    "Persian": "باران آمدن",
+    "Pronunciation": "bârân âmadan",
+    "English": "to rain"
+  },
+  {
+    "Persian": "باز کردن",
+    "Pronunciation": "bâz kardan",
+    "English": "to open"
+  },
+  {
+    "Persian": "بازی کردن",
+    "Pronunciation": "bâzi kardan",
+    "English": "to play"
+  },
+  {
+    "Persian": "بافتن",
+    "Pronunciation": "bâftan",
+    "English": "to weave"
+  },
+  {
+    "Persian": "بخشیدن",
+    "Pronunciation": "bakhshidan",
+    "English": "to forgive"
+  },
+  {
+    "Persian": "بر داشتن",
+    "Pronunciation": "bar dâshtan",
+    "English": "to pick up"
+  },
+  {
+    "Persian": "بر گشتن",
+    "Pronunciation": "bar gashtan",
+    "English": "to return, to come back"
+  },
+  {
+    "Persian": "بردن",
+    "Pronunciation": "bordan",
+    "English": "to take; to win"
+  },
+  {
+    "Persian": "برف آمدن",
+    "Pronunciation": "barf âmadan",
+    "English": "to snow"
+  },
+  {
+    "Persian": "بریدن",
+    "Pronunciation": "boridan",
+    "English": "to cut"
+  },
+  {
+    "Persian": "بستن",
+    "Pronunciation": "bastan",
+    "English": "to close"
+  },
+  {
+    "Persian": "به دنیا آمدن",
+    "Pronunciation": "be donyâ âmadan",
+    "English": "to be born"
+  },
+  {
+    "Persian": "به دنیا آوردن",
+    "Pronunciation": "be donyâ âvardan",
+    "English": "to give birth to"
+  },
+  {
+    "Persian": "بو کردن",
+    "Pronunciation": "bu kardan",
+    "English": "to smell"
+  },
+  {
+    "Persian": "بودن",
+    "Pronunciation": "budan",
+    "English": "to be"
+  },
+  {
+    "Persian": "بوس کردن",
+    "Pronunciation": "bus kardan",
+    "English": "to kiss"
+  },
+  {
+    "Persian": "پختن",
+    "Pronunciation": "pokhtan",
+    "English": "to cook, to bake"
+  },
+  {
+    "Persian": "پرسیدن",
+    "Pronunciation": "porsidan",
+    "English": "to ask"
+  },
+  {
+    "Persian": "پرواز کردن",
+    "Pronunciation": "parvâz kardan",
+    "English": "to fly"
+  },
+  {
+    "Persian": "پوشیدن",
+    "Pronunciation": "pushidan",
+    "English": "to wear"
+  },
+  {
+    "Persian": "پیچیدن",
+    "Pronunciation": "pichidan",
+    "English": "to turn; to wrap"
+  },
+  {
+    "Persian": "پیدا کردن",
+    "Pronunciation": "peydâ kardan",
+    "English": "to find"
+  },
+  {
+    "Persian": "تا کردن",
+    "Pronunciation": "tâ kardan",
+    "English": "to fold"
+  },
+  {
+    "Persian": "ترساندن",
+    "Pronunciation": "tarsândan",
+    "English": "to frighten"
+  },
+  {
+    "Persian": "ترسیدن",
+    "Pronunciation": "tarsidan",
+    "English": "to be afraid of"
+  },
+  {
+    "Persian": "تلفن زدن",
+    "Pronunciation": "telefon zadan",
+    "English": "to call, to phone"
+  },
+  {
+    "Persian": "تماشا کردن",
+    "Pronunciation": "tamâshâ kardan",
+    "English": "to watch"
+  },
+  {
+    "Persian": "تمیز کردن",
+    "Pronunciation": "tamiz kardan",
+    "English": "to clean"
+  },
+  {
+    "Persian": "جواب دادن",
+    "Pronunciation": "javâb dâdan",
+    "English": "to answer, to reply"
+  },
+  {
+    "Persian": "جویدن",
+    "Pronunciation": "javidan",
+    "English": "to chew"
+  },
+  {
+    "Persian": "جیغ زدن",
+    "Pronunciation": "jigh zadan",
+    "English": "to scream"
+  },
+  {
+    "Persian": "چرت زدن",
+    "Pronunciation": "chort zadan",
+    "English": "to take a nap"
+  },
+  {
+    "Persian": "چرخاندن",
+    "Pronunciation": "charkhândan",
+    "English": "to twist, to turn"
+  },
+  {
+    "Persian": "چرخیدن",
+    "Pronunciation": "charkhidan",
+    "English": "to turn"
+  },
+  {
+    "Persian": "چسباندن",
+    "Pronunciation": "chasbândan",
+    "English": "to paste"
+  },
+  {
+    "Persian": "چشیدن",
+    "Pronunciation": "cheshidan",
+    "English": "to taste"
+  },
+  {
+    "Persian": "چیدن",
+    "Pronunciation": "chidan",
+    "English": "to pick (flowers, fruit); to lay, to set (table)"
+  },
+  {
+    "Persian": "حرف زدن",
+    "Pronunciation": "harf zadan",
+    "English": "to talk"
+  },
+  {
+    "Persian": "حل کردن",
+    "Pronunciation": "hall kardan",
+    "English": "to solve"
+  },
+  {
+    "Persian": "حمام رفتن",
+    "Pronunciation": "hammâm raftan",
+    "English": "to take a bath"
+  },
+  {
+    "Persian": "خراب کردن",
+    "Pronunciation": "kharâb kardan",
+    "English": "to break (not function)"
+  },
+  {
+    "Persian": "خرید رفتن",
+    "Pronunciation": "kharid raftan",
+    "English": "to go shopping"
+  },
+  {
+    "Persian": "خرید کردن",
+    "Pronunciation": "kharid kardan",
+    "English": "to do shopping"
+  },
+  {
+    "Persian": "خریدن",
+    "Pronunciation": "kharidan",
+    "English": "to buy"
+  },
+  {
+    "Persian": "خم کردن",
+    "Pronunciation": "kham kardan",
+    "English": "to bend"
+  },
+  {
+    "Persian": "خواب دیدن",
+    "Pronunciation": "khwâb didan",
+    "English": "to dream"
+  },
+  {
+    "Persian": "خوابیدن",
+    "Pronunciation": "khwâbidan",
+    "English": "to sleep"
+  },
+  {
+    "Persian": "خواستن",
+    "Pronunciation": "khwâstan",
+    "English": "to want"
+  },
+  {
+    "Persian": "خواندن",
+    "Pronunciation": "khwândan",
+    "English": "to read; to sing"
+  },
+  {
+    "Persian": "خواندن",
+    "Pronunciation": "khwândan",
+    "English": "to read"
+  },
+  {
+    "Persian": "خوردن",
+    "Pronunciation": "khordan",
+    "English": "to eat"
+  },
+  {
+    "Persian": "داد زدن",
+    "Pronunciation": "dâd zadan",
+    "English": "to shout"
+  },
+  {
+    "Persian": "دادن",
+    "Pronunciation": "dâdan",
+    "English": "to give"
+  },
+  {
+    "Persian": "داشتن",
+    "Pronunciation": "dâshtan",
+    "English": "to have"
+  },
+  {
+    "Persian": "دانستن",
+    "Pronunciation": "dânestan",
+    "English": "to know (have information)"
+  },
+  {
+    "Persian": "در زدن",
+    "Pronunciation": "dar zadan",
+    "English": "to knock on the door"
+  },
+  {
+    "Persian": "درست کردن",
+    "Pronunciation": "dorost kardan",
+    "English": "to fix, to mend; to adjust; to correct; to make (meal)"
+  },
+  {
+    "Persian": "دروغ گفتن",
+    "Pronunciation": "dorugh goftan",
+    "English": "to lie, to tell a lie"
+  },
+  {
+    "Persian": "دست زدن",
+    "Pronunciation": "dast zadan",
+    "English": "to touch"
+  },
+  {
+    "Persian": "دنبال گشتن",
+    "Pronunciation": "donbâl gashtan",
+    "English": "to search, to look for"
+  },
+  {
+    "Persian": "دوختن",
+    "Pronunciation": "dukhtan",
+    "English": "to sew"
+  },
+  {
+    "Persian": "دوست داشتن",
+    "Pronunciation": "dust dâshtan",
+    "English": "to like; to love"
+  },
+  {
+    "Persian": "دوش گرفتن",
+    "Pronunciation": "dush gereftan",
+    "English": "to take a shower"
+  },
+  {
+    "Persian": "دویدن",
+    "Pronunciation": "davidan",
+    "English": "to run"
+  },
+  {
+    "Persian": "دیدن",
+    "Pronunciation": "didan",
+    "English": "to see"
+  },
+  {
+    "Persian": "رسیدن",
+    "Pronunciation": "residan",
+    "English": "to reach"
+  },
+  {
+    "Persian": "رفتن",
+    "Pronunciation": "raftan",
+    "English": "to go"
+  },
+  {
+    "Persian": "رقصیدن",
+    "Pronunciation": "raghsidan",
+    "English": "to dance"
+  },
+  {
+    "Persian": "ریختن",
+    "Pronunciation": "rikhtan",
+    "English": "to pour, to spill"
+  },
+  {
+    "Persian": "زاییدن",
+    "Pronunciation": "zâyidan",
+    "English": "to bear, to give birth"
+  },
+  {
+    "Persian": "زدن",
+    "Pronunciation": "zadan",
+    "English": "to kick, to hit"
+  },
+  {
+    "Persian": "زندگی کردن",
+    "Pronunciation": "zendegi kardan",
+    "English": "to live"
+  },
+  {
+    "Persian": "زنگ زدن",
+    "Pronunciation": "zang zadan",
+    "English": "to ring, to call"
+  },
+  {
+    "Persian": "ساختن",
+    "Pronunciation": "sâkhtan",
+    "English": "to make, to build"
+  },
+  {
+    "Persian": "سوختن",
+    "Pronunciation": "sukhtan",
+    "English": "to burn"
+  },
+  {
+    "Persian": "شدن",
+    "Pronunciation": "shodan",
+    "English": "to become"
+  },
+  {
+    "Persian": "شستن",
+    "Pronunciation": "shostan",
+    "English": "to wash"
+  },
+  {
+    "Persian": "شکستن",
+    "Pronunciation": "shekastan",
+    "English": "to break (into pieces; bone; promise)"
+  },
+  {
+    "Persian": "شمردن",
+    "Pronunciation": "shemordan",
+    "English": "to count"
+  },
+  {
+    "Persian": "شناختن",
+    "Pronunciation": "shenâkhtan",
+    "English": "to know (be familiar)"
+  },
+  {
+    "Persian": "شنیدن",
+    "Pronunciation": "shenidan",
+    "English": "to hear"
+  },
+  {
+    "Persian": "صحبت کردن",
+    "Pronunciation": "sohbat kardan",
+    "English": "to talk"
+  },
+  {
+    "Persian": "عاشق شدن",
+    "Pronunciation": "âshegh shodan",
+    "English": "to fall in love"
+  },
+  {
+    "Persian": "فراموش کردن",
+    "Pronunciation": "farâmush kardan",
+    "English": "to forget"
+  },
+  {
+    "Persian": "فرستادن",
+    "Pronunciation": "ferestâdan",
+    "English": "to send"
+  },
+  {
+    "Persian": "فروختن",
+    "Pronunciation": "forukhtan",
+    "English": "to sell"
+  },
+  {
+    "Persian": "فشار دادن",
+    "Pronunciation": "feshâr dâdan",
+    "English": "to press"
+  },
+  {
+    "Persian": "فکر کردن",
+    "Pronunciation": "fekr kardan",
+    "English": "to think"
+  },
+  {
+    "Persian": "فهمیدن",
+    "Pronunciation": "fahmidan",
+    "English": "to understand"
+  },
+  {
+    "Persian": "قبول کردن",
+    "Pronunciation": "ghabul kardan",
+    "English": "to accept"
+  },
+  {
+    "Persian": "کاشتن",
+    "Pronunciation": "kâshtan",
+    "English": "to plant"
+  },
+  {
+    "Persian": "کشتن",
+    "Pronunciation": "koshtan",
+    "English": "to kill"
+  },
+  {
+    "Persian": "کشیدن",
+    "Pronunciation": "keshidan",
+    "English": "to draw; to pull"
+  },
+  {
+    "Persian": "کمک کردن",
+    "Pronunciation": "komak kardan",
+    "English": "to help"
+  },
+  {
+    "Persian": "کندن",
+    "Pronunciation": "kandan",
+    "English": "to dig; to pluck"
+  },
+  {
+    "Persian": "کوبیدن",
+    "Pronunciation": "kubidan",
+    "English": "to pound"
+  },
+  {
+    "Persian": "گذاشتن",
+    "Pronunciation": "gozâshtan",
+    "English": "to put, to lay"
+  },
+  {
+    "Persian": "گرفتن",
+    "Pronunciation": "gereftan",
+    "English": "to take; to catch, to grab"
+  },
+  {
+    "Persian": "گریه کردن",
+    "Pronunciation": "gerye kardan",
+    "English": "to cry, to weep"
+  },
+  {
+    "Persian": "گفتن",
+    "Pronunciation": "goftan",
+    "English": "to say"
+  },
+  {
+    "Persian": "گم کردن",
+    "Pronunciation": "gom kardan",
+    "English": "to lose (be unable to find)"
+  },
+  {
+    "Persian": "گوش دادن",
+    "Pronunciation": "gush dâdan",
+    "English": "to listen"
+  },
+  {
+    "Persian": "گوش کردن",
+    "Pronunciation": "gush kardan",
+    "English": "to listen"
+  },
+  {
+    "Persian": "لرزیدن",
+    "Pronunciation": "larzidan",
+    "English": "to shiver"
+  },
+  {
+    "Persian": "ماندن",
+    "Pronunciation": "mândan",
+    "English": "to stay, to remain"
+  },
+  {
+    "Persian": "مردن",
+    "Pronunciation": "mordan",
+    "English": "to die"
+  },
+  {
+    "Persian": "نشان دادن",
+    "Pronunciation": "neshân dâdan",
+    "English": "to show"
+  },
+  {
+    "Persian": "نشستن",
+    "Pronunciation": "neshastan",
+    "English": "to sit"
+  },
+  {
+    "Persian": "نگاه کردن",
+    "Pronunciation": "negâh kardan",
+    "English": "to look"
+  },
+  {
+    "Persian": "نوشتن",
+    "Pronunciation": "neveshtan",
+    "English": "to write"
+  },
+  {
+    "Persian": "نوشیدن",
+    "Pronunciation": "nushidan",
+    "English": "to drink"
+  },
+  {
+    "Persian": "هل دادن",
+    "Pronunciation": "hol dâdan",
+    "English": "to push"
+  },
+  {
+    "Persian": "یاد دادن",
+    "Pronunciation": "yâd dâdan",
+    "English": "to teach"
+  },
+  {
+    "Persian": "یاد گرفتن",
+    "Pronunciation": "yâd gereftan",
+    "English": "to learn"
+  }
+];
+    </script>
+</body>
+</html>
