@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8"/>
+</head>
+<body style="background-color: #ffffff; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
+    <div style="width:100%; background-color: #373433; padding:10px; padding-left:20px;">
+        <h2 style="color:#fff; margin:0;">Persian verbs</h2>
+    </div>
+    <div id="box"></div>
+
+    <script>
+        
+
+		function start(){
+			var client = new XMLHttpRequest();
+client.open('GET', '/verbtest.csv');
+client.onreadystatechange = function() {
+   document.getElementById("box").innerHTML =  client.responseText;
+}
+client.send();
+			
+		}
+
+        
+        
+        
+    </script>
+</body>
+</html>
