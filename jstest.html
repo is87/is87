@@ -1,37 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
+    <link href="https://fonts.googleapis.com/css?family=Mirza" rel="stylesheet">
 </head>
-<body style="background-color: #ffffff; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
-    <div style="width:100%; background-color: #373433; padding:10px; padding-left:20px;">
-        <h2 style="color:#fff; margin:0;">Persian verbs</h2>
+<style>
+  html{
+    box-sizing: border-box;
+  }
+.knapp{
+  font-size: 50pt;
+  margin: 10px;
+  padding: 10px;
+  width: 80%;
+  background-color: #cfc7c4;
+}
+</style>
+<body style="background-color: #ECEAE7; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
+    <div style="width:100%; background-color: #373433; height: 40px; text-align:center; line-height:40px; box-shadow: 0px 2px 1px #999;"> 
+      <span style="color:#fff; margin:0; font-weight: bold; font-size: 20pt;">Persian verbs</span>  
+      <span id="latinBox" style="background-color:#ccc; float: right;" onclick="toggleLatin();">Latinization on</span> 
+      
     </div>
 
-    <button id="latinBox" style="background-color:#ccc; width:fit-content; padding: 10px; margin: 20px; float: right;" onclick="toggleLatin();">Latinization on</button>
+    <div id="mainBox" style="width: 100%; overflow:auto; position: absolute; left:0px; top: 40px; bottom: 40px;">
     <div id="pointBox" style="font-size:30pt; margin:20px;">0/0 (0%)</div>
     
     <center>
-            <!--<button style="font-size: 30pt;" onclick="cheat()">Fuska</button><br><br><br>-->
-        <div id="txt2" style="font-size: 50pt;"></div>
-        <button id="b1" style="font-size: 50pt; margin: 20px; width: 80%;" value="0" onclick="check(0);">Word 1</button><br/>
-        <button id="b2" style="font-size: 50pt; margin: 20px; width: 80%;" value="1" onclick="check(1);">Word 2</button><br/>
-        <button id="b3" style="font-size: 50pt; margin: 20px; width: 80%;" value="2" onclick="check(2);">Word 3</button><br/>
-        <button id="b4" style="font-size: 50pt; margin: 20px; width: 80%;" value="3" onclick="check(3);">Word 4</button>
+        <div id="txt2" style="font-size: 50pt; font-family: 'Mirza', cursive;"></div><br/>
+        <div class="knapp" id="b1" onclick="check(0);">Word 1</div><br/>
+        <div class="knapp" id="b2" onclick="check(1);">Word 2</div><br/>
+        <div class="knapp" id="b3"  onclick="check(2);">Word 3</div><br/>
+        <div class="knapp" id="b4"  onclick="check(3);">Word 4</div>
     <br><br><button style="font-size: 50pt; visibility:hidden;" id="btn" onclick="start()">Next word</button>
-    <br><br><div style="background-color:#a09996; width: 80%; height: 50px; padding: 5px;" align="left">
-        <div id="wrong" style="background-color:#501a13; width: 100%; height: 100%; float: right;"></div>
-        <div id="right" style="background-color:#135013; width: 0%; height: 100%;"></div>
+        
             
     </div>
 </center>
-
+</div>
+<div id="bottomBox" style="width: 100%; height: 40px; font-size: 12px; position: fixed; left: 0px; bottom: 0px; background-color: #ccc; color:#fff;  text-align:center; line-height:40px; padding: 5px;">
+    <div id="wrong" style="background-color:#ed553b; width: 100%; height: 100%; float: right;"></div>
+    <div id="right" style="background-color:#4fb99f; width: 0%; height: 100%;"></div>
+</div>
     <script>
         var rounds = 0;
         var correct = 0;
         var siffra;
         var latinHelp = true;
         var varr = [];
+        var playing = false;
         var bt =[document.getElementById("b1"), document.getElementById("b2"), document.getElementById("b3"), document.getElementById("b4")];
 
         function toggleLatin(){
@@ -46,29 +63,30 @@
         }
 
 		function check(nr){
+      if(playing){
 			rounds++;
 			if(nr == siffra){
-                document.getElementById("txt2").style.color = "#339933";
+                document.getElementById("txt2").style.color = "#4fb99f";
                 correct++;
 			}else{
-				document.getElementById("txt2").style.color = "#993333";
+				document.getElementById("txt2").style.color = "#ed553b";
 			}
             for(i=0;i<4;i++){
-                bt[i].disabled = true;
                 bt[i].style.color = "#999";
             }
-            bt[nr].style.color = "#993333";
-            bt[siffra].style.color = "#339933";
+            bt[nr].style.color = "#ed553b";
+            bt[siffra].style.color = "#4fb99f";
             document.getElementById("btn").style.visibility = "visible";
             percentage = Math.round(correct/rounds*100);
             document.getElementById("pointBox").innerHTML = correct +"/"+rounds + " ("+percentage+"%)";
             document.getElementById("right").style.width = percentage+"%";
             document.getElementById("wrong").style.width = (100-percentage)+"%";
+            playing = false;
+      }
 		}
 
 		function start(){
 			for(i=0;i<4;i++){
-                bt[i].disabled = false;
                 bt[i].style.color = "#000000";
             }
             document.getElementById("txt2").style.color = "#4a6da7";
@@ -82,6 +100,7 @@
             document.getElementById("b2").innerHTML = varr[1].English;
             document.getElementById("b3").innerHTML = varr[2].English;
             document.getElementById("b4").innerHTML = varr[3].English;
+            playing = true;
 			
 		}
 
