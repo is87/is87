@@ -36,7 +36,7 @@
         <div class="knapp" id="b2" onclick="check(1);">Word 2</div><br/>
         <div class="knapp" id="b3"  onclick="check(2);">Word 3</div><br/>
         <div class="knapp" id="b4"  onclick="check(3);">Word 4</div>
-    <br><br><div style="font-size: 50pt; visibility:hidden; background-color: #cfc7c4; margin: 10px; padding: 10px; width: fit-content;" id="btn" onclick="start()">Next word >></div>
+    <br><br><div style="font-size: 50pt; visibility:hidden; background-color: #cfc7c4; margin: 10px; padding: 10px; width: fit-content;" id="btn" onclick="start()">Next word</div>
         
             
     </div>
@@ -112,6 +112,7 @@
             document.getElementById("txt2").innerHTML = varr[siffra].Persian;
             //if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
             document.getElementById("latinText").innerHTML = varr[siffra].Pronunciation;
+            document.getElementById("latinText").style.fontSize = "30pt";
             document.getElementById("b1").innerHTML = varr[0].English;
             document.getElementById("b2").innerHTML = varr[1].English;
             document.getElementById("b3").innerHTML = varr[2].English;
