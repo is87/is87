@@ -14,9 +14,9 @@
 
 		function start(){
 			var client = new XMLHttpRequest();
-client.open('GET', '/verbtest.csv');
+client.open('GET', 'verbtest.csv');
 client.onreadystatechange = function() {
-   document.getElementById("box").innerHTML =  client.responseText.length;
+   document.getElementById("box").innerHTML =  client.responseText;
 }
 client.send();
 			
