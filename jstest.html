@@ -41,9 +41,11 @@
     <span id="pointBox" style="float: right; margin-right: 15px;">0/0 (0%)</span>
   <span id="latinBox" onclick="toggleLatin();">Latinization on</span>
 </div>
-<div id="bottomBox" style="width: 100%; height: 40px; font-size: 12px; position: fixed; left: 0px; bottom: 0px; background-color: #ccc;  text-align:center; line-height:40px; padding: 5px;">
-    <div id="wrong" style="background-color:#ed553b; width: 100%; height: 100%; float: right;"></div>
-    <div id="right" style="background-color:#4fb99f; width: 0%; height: 100%;"></div>
+<div id="bottomBox" style="width: 100%; height: 40px; font-size: 12px; position: fixed; left: 0px; bottom: 0px; background-color: #ccc;  text-align:center; line-height:40px;">
+    <div id="wrong" style="background-color:#ed553b; height: 30px; left: 5px; position:fixed; right: 5px; bottom: 5px;">
+        <div id="right" style="background-color:#4fb99f; width: 50%; height: 100%;"></div>
+      </div>
+    
 </div>
     <script>
         var rounds = 0;
@@ -83,7 +85,6 @@
             percentage = Math.round(correct/rounds*100);
             document.getElementById("pointBox").innerHTML = correct +"/"+rounds + " ("+percentage+"%)";
             document.getElementById("right").style.width = percentage+"%";
-            document.getElementById("wrong").style.width = (100-percentage)+"%";
             playing = false;
       }
 		}
