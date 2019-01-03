@@ -18,14 +18,32 @@ client.open('GET', 'verbtest.csv');
 client.onreadystatechange = function() {
     if(client.readyState === 4 && client.status === 200) {
    document.getElementById("box").innerHTML =  client.responseText;
-   alert(client.responseText.indexOf("\t")+" - "+client.responseText.indexOf("\n"));
+   //alert(client.responseText.indexOf("\t")+" - "+client.responseText.indexOf("\n"));
+   processData(client.responseText);
     }
 }
 client.send();
 			
 		}
 
-        
+        function processData(allText) {
+    var allTextLines = allText.split(/\r\n|\n/);
+    var headers = allTextLines[0].split('\t');
+    var lines = [];
+
+    for (var i=1; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(',');
+        if (data.length == headers.length) {
+
+            var tarr = [];
+            for (var j=0; j<headers.length; j++) {
+                tarr.push(headers[j]+":"+data[j]);
+            }
+            lines.push(tarr);
+        }
+    }
+    alert(lines[0]);
+}
         
         
     </script>
