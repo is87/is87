@@ -32,7 +32,7 @@ client.send();
     var lines = [];
 
     for (var i=1; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split(',');
+        var data = allTextLines[i].split('\t');
         if (data.length == headers.length) {
 
             var tarr = [];
