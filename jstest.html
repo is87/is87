@@ -18,13 +18,12 @@
 </style>
 <body style="background-color: #ECEAE7; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
     <div style="width:100%; background-color: #373433; height: 40px; text-align:center; line-height:40px; box-shadow: 0px 2px 1px #999;"> 
-      <span style="color:#fff; margin:0; font-weight: bold; font-size: 20pt;">Persian verbs</span>  
-      <span id="latinBox" style="background-color:#ccc; float: right;" onclick="toggleLatin();">Latinization on</span> 
+      <span style="color:#fff; margin:0; font-weight: bold; font-size: 20pt;">Persian verbs</span>   
       
     </div>
 
     <div id="mainBox" style="width: 100%; overflow:auto; position: absolute; left:0px; top: 40px; bottom: 40px;">
-    <div id="pointBox" style="font-size:30pt; margin:20px;">0/0 (0%)</div>
+    
     
     <center>
         <div id="txt2" style="font-size: 50pt; font-family: 'Mirza', cursive;"></div><br/>
@@ -38,7 +37,11 @@
     </div>
 </center>
 </div>
-<div id="bottomBox" style="width: 100%; height: 40px; font-size: 12px; position: fixed; left: 0px; bottom: 0px; background-color: #ccc; color:#fff;  text-align:center; line-height:40px; padding: 5px;">
+<div id="underBox" style="width: 100%; height: 40px; font-size: 20pt; position: fixed; left: 0px; bottom: 40px; background-color: #ccc;  text-align:left; line-height:40px; padding: 5px;">
+    <span id="pointBox" style="float: right; margin-right: 15px;">0/0 (0%)</span>
+  <span id="latinBox" onclick="toggleLatin();">Latinization on</span>
+</div>
+<div id="bottomBox" style="width: 100%; height: 40px; font-size: 12px; position: fixed; left: 0px; bottom: 0px; background-color: #ccc;  text-align:center; line-height:40px; padding: 5px;">
     <div id="wrong" style="background-color:#ed553b; width: 100%; height: 100%; float: right;"></div>
     <div id="right" style="background-color:#4fb99f; width: 0%; height: 100%;"></div>
 </div>
