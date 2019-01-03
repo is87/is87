@@ -75,9 +75,11 @@
 			rounds++;
 			if(nr == siffra){
                 document.getElementById("txt2").style.color = "#4fb99f";
+                document.getElementById("latinText").style.color = "#4fb99f";
                 correct++;
 			}else{
 				document.getElementById("txt2").style.color = "#ed553b";
+        document.getElementById("latinText").style.color = "#ed553b";
 			}
             for(i=0;i<4;i++){
                 bt[i].style.color = "#999";
@@ -97,6 +99,7 @@
                 bt[i].style.color = "#000000";
             }
             document.getElementById("txt2").style.color = "#4a6da7";
+            document.getElementById("latinText").style.color = "#4a6da7";
 			document.getElementById("btn").style.visibility = "hidden";
 			
             varr = shuffle(verb);
