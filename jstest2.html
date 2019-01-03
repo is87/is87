@@ -17,6 +17,7 @@
 client.open('GET', 'verbtest.csv');
 client.onreadystatechange = function() {
    document.getElementById("box").innerHTML =  client.responseText;
+   alert(client.responseText.indexOf("\t"));
 }
 client.send();
 			
