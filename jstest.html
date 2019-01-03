@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <link href="https://fonts.googleapis.com/css?family=Mirza" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Scheherazade" rel="stylesheet">
 </head>
 <style>
   html{
@@ -26,7 +26,8 @@
     
     
     <center>
-        <div id="txt2" style="font-size: 50pt; font-family: 'Mirza', cursive;"></div><br/>
+        <div id="txt2" style="font-size: 70pt; font-family: 'Scheherazade', serif;"></div><br/>
+        <div id="latinText" style="font-size: 30pt;"></div><br/>
         <div class="knapp" id="b1" onclick="check(0);">Word 1</div><br/>
         <div class="knapp" id="b2" onclick="check(1);">Word 2</div><br/>
         <div class="knapp" id="b3"  onclick="check(2);">Word 3</div><br/>
@@ -59,12 +60,14 @@
         function toggleLatin(){
             if (latinHelp){
                 document.getElementById("latinBox").innerHTML = "Latinization off";
+                document.getElementById("latinText").style.visibility = "hidden";
             }else{
                 document.getElementById("latinBox").innerHTML = "Latinization on";
+                document.getElementById("latinText").style.visibility = "visible";
             }
             latinHelp = !latinHelp;
-            document.getElementById("txt2").innerHTML = varr[siffra].Persian;
-            if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
+            //document.getElementById("txt2").innerHTML = varr[siffra].Persian;
+            //if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
         }
 
 		function check(nr){
@@ -99,7 +102,8 @@
             varr = shuffle(verb);
             siffra = Math.floor((Math.random() * 4));
             document.getElementById("txt2").innerHTML = varr[siffra].Persian;
-            if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
+            //if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
+            document.getElementById("latinText").innerHTML = varr[siffra].Pronunciation;
             document.getElementById("b1").innerHTML = varr[0].English;
             document.getElementById("b2").innerHTML = varr[1].English;
             document.getElementById("b3").innerHTML = varr[2].English;
