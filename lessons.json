@@ -24,6 +24,16 @@
                     "sentence": "Min bok är bra."
                 }
             ]
+        },
+        {
+            "name": "Klockan",
+            "items": [
+                {
+                    "words": "sa'ãt se o nim",
+                    "extraWords": "chahãr daghighe panj",
+                    "sentence": "Klcockan halv fyra"
+                }
+            ]
         }
     ]
 }
