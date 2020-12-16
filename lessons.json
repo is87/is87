@@ -1,0 +1,29 @@
+{
+    "lessons": [
+        {
+            "name": "Basics",
+            "items": [
+                {
+                    "words": "man se ketãb dãram",
+                    "extraWords": "mã ketãbhã",
+                    "sentence": "Jag har tre böcker."
+                },
+                {
+                    "words": "hur mår ni",
+                    "extraWords": "vem är varför har",
+                    "sentence": "Hãl-e shomã chetor ast?"
+                },
+                {
+                    "words": "mã kheyli khub hastim",
+                    "extraWords": "shomã dãrim be yek",
+                    "sentence": "Vi mår mycket bra."
+                },
+                {
+                    "words": "ketãb -e man khub ast",
+                    "extraWords": "mã kheyli hastam mikonad",
+                    "sentence": "Min bok är bra."
+                }
+            ]
+        }
+    ]
+}

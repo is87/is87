@@ -3,91 +3,134 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
     <style>
-
-        body{
+        body {
             font-family: Arial, Helvetica, sans-serif;
+            font-size: 2.5vh;
+            margin: 0;
+            padding: 0;
         }
 
         .flex-container {
             background-color: #fff;
-            position: fixed;
-            bottom: 100px;
-            left: 0px;
-            right: 0px;
             display: flex;
-            padding: 20px;
+            flex-wrap: wrap;
         }
 
         #bottombottom {
-            padding: 20px;
+            padding: 2vh;
             background-color: #fff;
             position: fixed;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            display: flex;
+            bottom: 0;
+            left: 0;
+            right: 0;
             align-content: center;
-            justify-content: center;
+
         }
 
-        #checkButton{
+        #checkButton {
             font-family: Arial, Helvetica, sans-serif;
-            font-weight:600;
+            font-weight: 600;
             text-align: center;
             padding: 10px;
-            width: 100%;
+
+            border-radius: 1vh;
+
+            margin-bottom: 2vh;
+            margin-top: 2vh;
+        }
+
+        .activeButton {
             background-color: #77C801;
             color: white;
-            border-radius: 5px;
-            box-shadow: 0px 5px #63ad15 ;
+            box-shadow: 0px 0.8vh #63ad15;
+        }
+
+        .inactiveButton {
+            background-color: #ccc;
+            color: #666;
+            box-shadow: 0px 0.8vh #ccc;
         }
 
         .visibleWord {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #fff;
-            border: 2px solid #ccc;
-            border-radius: 5px;
+            border: 0.3vh solid #ddd;
+            border-radius: 1vh;
             color: #333;
-            margin: 20px 10px;
+            margin: 2vh 1vh;
             padding: 10px;
+            box-shadow: 0px 0.5vh #ddd;
         }
 
         .invisibleWord {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #ccc;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            color: #ccc;
-            margin: 20px 10px;
+            background-color: #ddd;
+            border: 0.3vh solid #ddd;
+            border-radius: 1vh;
+            color: #ddd;
+            margin: 2vh 1vh;
             padding: 10px;
+            box-shadow: 0px 0.5vh #ddd;
         }
 
-        .container{
+        .container {
             position: fixed;
-            top: 50px;
+            top: 5vh;
+            padding: 1vh;
         }
 
         #output {
-            position: fixed;
-            top: 150px;
+
             display: flex;
+            flex-wrap: wrap;
         }
     </style>
     <script>
+        var sentences = [["man se ketãb dãram", "mã ketãbhã", "Jag har tre böcker."], ["hur mår ni", "vem är varför har", "Hãl-e shomã chetor ast?"], ["mã kheyli khub hastim", "shomã dãrim be yek", "Vi mår mycket bra."], ["ketãb -e man khub ast", "mã kheyli hastam mikonad", "Min bok är bra."]];
         var correctSentence = "man se ketãb dãram";
         var extraWords = "mã ketãbhã"
         //var words = ["ketãb", "se", "man", "dãram", "ketãbhã", "mã"];
         var words = [];
         chosenWords = [];
+        sentenceNr = 0;
+        numberOfSentences = 0;
+
+        function loadJSON() {
+            var url = "lessons.json";
+            fetch(url)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    data = myJson;
+                    console.log("Data fetched.");
+                    console.log(data);
+                });
+        }
+
         function init() {
-            words = correctSentence.split(" ").concat(extraWords.split(" "));
-            words = words.sort(() => Math.random() - 0.5)
+            loadJSON();
+            /*words = correctSentence.split(" ").concat(extraWords.split(" "));
+            words = words.sort(() => Math.random() - 0.5);*/
+            numberOfSentences = sentences.length;
+            document.getElementById("progress").style.width = "10%";
+            loadWord(sentences[0]);
+        }
+
+        function loadWord(arr) {
+            words = arr[0].split(" ").concat(arr[1].split(" "));
+            words = words.sort(() => Math.random() - 0.5);
+            correctSentence = arr[0];
+            document.getElementById("svenskMening").innerText = arr[2];
             bot = document.getElementById("bottom");
+            bot.innerHTML = "";
             for (i = 0; i < words.length; i++) {
                 bot.innerHTML += "<div class='visibleWord' data-number='" + i + "' data-used='0' onclick='clicked(this);'>" + words[i] + "</div>";
             }
-            //update();
+            chosenWords = [];
+            update();
         }
 
         function clicked(word) {
@@ -98,7 +141,7 @@
                 nr = word.getAttribute("data-number");
                 chosenWords.push(nr);
                 //console.log(chosenWords);
-                
+
                 update();
             }
         }
@@ -106,54 +149,106 @@
         function removeWord(word) {
             chosenWords.splice(Number(word.getAttribute("data-index")), 1);
             document.getElementById("bottom").children[Number(word.getAttribute("data-number"))].setAttribute("data-used", "0");
-                
-                update();
+
+            update();
         }
 
-        function check(){
-            str = "";
-            for (i = 0; i < chosenWords.length; i++) {
-                str += words[chosenWords[i]] + " ";
-            }
-            console.log(str);
-            if(correctSentence == str.trim()){
-                console.log("CORRECT");
-            }else{
-                console.log("FALSE");
+        function check() {
+            if (chosenWords.length > 0) {
+                str = "";
+                for (i = 0; i < chosenWords.length; i++) {
+                    str += words[chosenWords[i]] + " ";
+                }
+                console.log(str);
+                if (correctSentence == str.trim()) {
+                    console.log("CORRECT");
+                    document.getElementById("progress").style.width = 10 + ((sentenceNr + 1) / numberOfSentences) * 90 + "%";
+                    document.getElementById("modal").style.display = "block";
+                    document.getElementById("lessonFinishedButton").style.display = "none";
+                    document.getElementById("nextWordButton").style.display = "none";
+                    if (sentenceNr + 1 == numberOfSentences) {
+                        document.getElementById("lessonFinishedButton").style.display = "block";
+                    } else {
+                        document.getElementById("nextWordButton").style.display = "block";
+                    }
+                } else {
+                    console.log("FALSE");
+                    document.getElementById("fel").style.display = "block";
+                    setTimeout(hideFel, 2000);
+                }
             }
         }
 
-        function update(){
+        function hideFel() {
+            document.getElementById("fel").style.display = "none";
+        }
+
+        function nextWord() {
+            document.getElementById("modal").style.display = "none";
+            sentenceNr++;
+            loadWord(sentences[sentenceNr]);
+        }
+
+        function update() {
             c = document.getElementById("bottom").children;
             //console.log(c.length);
             for (i = 0; i < c.length; i++) {
-                    if (c[i].getAttribute("data-used") == "0"){
-                        c[i].className = "visibleWord";
-                    }else{
-                        c[i].className = "invisibleWord";
-                    }
+                if (c[i].getAttribute("data-used") == "0") {
+                    c[i].className = "visibleWord";
+                } else {
+                    c[i].className = "invisibleWord";
                 }
-                document.getElementById("output").innerHTML = "";
-                for (i = 0; i < chosenWords.length; i++) {
-                    aNr = Number(chosenWords[i]);
-                    aStr = words[aNr];
-                    document.getElementById("output").innerHTML += "<div class='visibleWord' data-index='"+i+"' data-number='" + aNr + "' data-used='0' onclick='removeWord(this);'>" + aStr + "</div>";
-                }
+            }
+            document.getElementById("output").innerHTML = "";
+            for (i = 0; i < chosenWords.length; i++) {
+                aNr = Number(chosenWords[i]);
+                aStr = words[aNr];
+                document.getElementById("output").innerHTML += "<div class='visibleWord' data-index='" + i + "' data-number='" + aNr + "' data-used='0' onclick='removeWord(this);'>" + aStr + "</div>";
+            }
+            if (chosenWords.length == 0) {
+                document.getElementById("checkButton").className = "inactiveButton";
+            } else {
+                document.getElementById("checkButton").className = "activeButton";
+            }
         }
     </script>
 </head>
 
 <body onload="init();">
-    <div style="position: fixed; top:0px; height:50px; left: 0px; right:0px; background-color: #333;"></div>
+    <div
+        style="position: fixed; top:0; height:5vh; font-size: 2vh; text-align: center; left: 0; right:0; background-color: #fff; color: #77C801;">
+        <div style="width: 50vw; margin: 1vh auto; height: 3vh; background-color: #ccc; border-radius: 1.5vh;">
+            <div id="progress" style="width: 10%; height: 3vh; background-color: #77C801;; border-radius: 1.5vh;"></div>
+        </div>
+    </div>
     <div id="basePlate" class="container">
-        <div style="font-weight: bold; margin: 20px; color: #333; font-size: 20px;">Översätt den här meningen</div>
-        <div style="font-weight: normal; margin: 20px; color: #333; font-size: 14px;">Jag har tre böcker</div>
+        <div style="font-weight: bold; margin: 1vh 0;  color: #555; font-size: 3.5vh;">Översätt meningen</div>
+        <div id="svenskMening" style="font-weight: normal; margin: 1vh 0; color: #555; font-size: 3vh;"></div>
+        <div id="output"></div>
     </div>
-    <div id="output"></div>
-    <div id="bottom" class="flex-container">
-    </div>
+
+
     <div id="bottombottom">
-        <div id="checkButton" onclick="check();">CHECK</div>
+        <div id="bottom" class="flex-container">
+        </div>
+        <div id="checkButton" class="activeButton" onclick="check();">FÄRDIG</div>
+    </div>
+    <div id="fel"
+        style='position: fixed; top: 45vh; text-align: center; font-weight: bold; width: 100%; color: darkred; display: none; z-index: 1; '>
+        INTE HELT RÄTT<br>FÖRSÖK IGEN
+    </div>
+    <div id="modal"
+        style="display:none; position:fixed; left:0; top:0; right: 0; bottom: 0; z-index:1; overflow:auto; background-color:rgba(0,0,0,0.3);">
+        <div style='margin: 40vh auto; text-align: center; font-weight: bold; width: 80vw; color: green '>
+            RÄTT. BRA JOBBAT!
+            <div id="nextWordButton" onclick="nextWord();" ;
+                style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: block;'>
+                NÄSTA</div>
+            <div id="lessonFinishedButton" onclick="lessonFinished();" ;
+                style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: none;'>
+                NYA UTMANINGAR</div>
+        </div>
+
     </div>
 </body>
 
