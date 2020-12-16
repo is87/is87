@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .flex-container {
+            background-color: #fff;
+            position: fixed;
+            bottom: 100px;
+            left: 0px;
+            right: 0px;
+            display: flex;
+            padding: 20px;
+        }
+
+        #bottombottom {
+            padding: 20px;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+
+        #checkButton{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight:600;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            background-color: #77C801;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0px 5px #63ad15 ;
+        }
+
+        .visibleWord {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+            margin: 20px 10px;
+            padding: 10px;
+        }
+
+        .invisibleWord {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ccc;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            color: #ccc;
+            margin: 20px 10px;
+            padding: 10px;
+        }
+
+        .container{
+            position: fixed;
+            top: 50px;
+        }
+
+        #output {
+            position: fixed;
+            top: 150px;
+            display: flex;
+        }
+    </style>
+    <script>
+        var correctSentence = "man se ketãb dãram";
+        var extraWords = "mã ketãbhã"
+        //var words = ["ketãb", "se", "man", "dãram", "ketãbhã", "mã"];
+        var words = [];
+        chosenWords = [];
+        function init() {
+            words = correctSentence.split(" ").concat(extraWords.split(" "));
+            words = words.sort(() => Math.random() - 0.5)
+            bot = document.getElementById("bottom");
+            for (i = 0; i < words.length; i++) {
+                bot.innerHTML += "<div class='visibleWord' data-number='" + i + "' data-used='0' onclick='clicked(this);'>" + words[i] + "</div>";
+            }
+            //update();
+        }
+
+        function clicked(word) {
+            if (word.getAttribute("data-used") == "0") {
+                word.setAttribute("data-used", "1");
+                //console.log(word);
+                //console.log(word.innerHTML);
+                nr = word.getAttribute("data-number");
+                chosenWords.push(nr);
+                //console.log(chosenWords);
+                
+                update();
+            }
+        }
+
+        function removeWord(word) {
+            chosenWords.splice(Number(word.getAttribute("data-index")), 1);
+            document.getElementById("bottom").children[Number(word.getAttribute("data-number"))].setAttribute("data-used", "0");
+                
+                update();
+        }
+
+        function check(){
+            str = "";
+            for (i = 0; i < chosenWords.length; i++) {
+                str += words[chosenWords[i]] + " ";
+            }
+            console.log(str);
+            if(correctSentence == str.trim()){
+                console.log("CORRECT");
+            }else{
+                console.log("FALSE");
+            }
+        }
+
+        function update(){
+            c = document.getElementById("bottom").children;
+            //console.log(c.length);
+            for (i = 0; i < c.length; i++) {
+                    if (c[i].getAttribute("data-used") == "0"){
+                        c[i].className = "visibleWord";
+                    }else{
+                        c[i].className = "invisibleWord";
+                    }
+                }
+                document.getElementById("output").innerHTML = "";
+                for (i = 0; i < chosenWords.length; i++) {
+                    aNr = Number(chosenWords[i]);
+                    aStr = words[aNr];
+                    document.getElementById("output").innerHTML += "<div class='visibleWord' data-index='"+i+"' data-number='" + aNr + "' data-used='0' onclick='removeWord(this);'>" + aStr + "</div>";
+                }
+        }
+    </script>
+</head>
+
+<body onload="init();">
+    <div style="position: fixed; top:0px; height:50px; left: 0px; right:0px; background-color: #333;"></div>
+    <div id="basePlate" class="container">
+        <div style="font-weight: bold; margin: 20px; color: #333; font-size: 20px;">Översätt den här meningen</div>
+        <div style="font-weight: normal; margin: 20px; color: #333; font-size: 14px;">Jag har tre böcker</div>
+    </div>
+    <div id="output"></div>
+    <div id="bottom" class="flex-container">
+    </div>
+    <div id="bottombottom">
+        <div id="checkButton" onclick="check();">CHECK</div>
+    </div>
+</body>
+
+</html>
