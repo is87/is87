@@ -85,6 +85,23 @@
                     "sentence": "Blå"
                 }
             ]
+        },
+        {
+            "name": "Siffror",
+            "items": [
+                {
+                    "type": "2",
+                    "words": "۲",
+                    "extraWords": "۳ ۵ ۷",
+                    "sentence": "Två"
+                },
+                {
+                    "type": "2",
+                    "words": "۵",
+                    "extraWords": "۷ ۴ ۰",
+                    "sentence": "Fem"
+                }
+            ]
         }
     ]
 }
