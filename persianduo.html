@@ -18,7 +18,7 @@
             flex-wrap: wrap;
         }
 
-        #bottombottom {
+        #type1Bottom {
             padding: 2vh;
             background-color: #fff;
             position: fixed;
@@ -75,10 +75,18 @@
             box-shadow: 0px 0.5vh #ddd;
         }
 
-        .container {
+        #type1Top {
             position: fixed;
             top: 5vh;
             padding: 1vh;
+            width: 100%;
+        }
+
+        #type2Main {
+            position: fixed;
+            top: 5vh;
+            padding: 1vh;
+            width: 100%;
         }
 
         #output {
@@ -109,6 +117,18 @@
             background-color: #77C801;
             color: white;
             box-shadow: 0px 0.8vh #63ad15;
+        }
+
+        .optionBox{
+            width: 40%;
+            background-color: #fff;
+            color: #333;
+            text-align: center;
+            margin: 2vh;
+            padding:5vh 0;
+            border-radius: 1vh;
+            border: 0.3vh solid #ddd;
+            box-shadow: 0 0.5vh #ddd;
         }
 
     </style>
@@ -171,6 +191,16 @@
 
         function loadWord(arr) {
             document.getElementById("modal").style.display = "none";
+            document.getElementById("type1Top").style.display = "none";
+            document.getElementById("type1Bottom").style.display = "none";
+            document.getElementById("type2Main").style.display = "none";
+            if(arr["type"] == "1")loadWordType1(arr);
+            if(arr["type"] == "2")loadWordType2(arr);
+        }
+
+        function loadWordType1(arr){
+            document.getElementById("type1Top").style.display = "block";
+            document.getElementById("type1Bottom").style.display = "block";
             words = arr["words"].split(" ").concat(arr["extraWords"].split(" "));
             words = words.sort(() => Math.random() - 0.5);
             correctSentence = arr["words"];
@@ -182,6 +212,38 @@
             }
             chosenWords = [];
             update();
+        }
+
+        function loadWordType2(arr){
+            document.getElementById("type2Main").style.display = "block";
+            document.getElementById("type2Word").innerText = arr["sentence"];
+            words = arr["words"].split(" ").concat(arr["extraWords"].split(" "));
+            words = words.sort(() => Math.random() - 0.5);
+            console.log(words);
+            words = words.sort(() => Math.random() - 0.5);
+            correctSentence = arr["words"];
+            document.getElementById("type2Word").innerText = arr["sentence"];
+            document.getElementById("type2BoxContainer").innerHTML = "";
+            for(i = 0; i<words.length;i++){
+                document.getElementById("type2BoxContainer").innerHTML += "<div onclick='optionClick(this);' class='optionBox'>"+words[i]+"</div>";
+            }
+        }
+
+        function optionClick(word){
+            if(word.innerText == correctSentence){
+                word.style.color = "green";
+                document.getElementById("progress").style.width = 10 + ((sentenceNr + 1) / numberOfSentences) * 90 + "%";
+                    document.getElementById("modal").style.display = "block";
+                    document.getElementById("lessonFinishedButton").style.display = "none";
+                    document.getElementById("nextWordButton").style.display = "none";
+                    if (sentenceNr + 1 == numberOfSentences) {
+                        document.getElementById("lessonFinishedButton").style.display = "block";
+                    } else {
+                        document.getElementById("nextWordButton").style.display = "block";
+                    }
+            }else{
+                word.style.color = "darkred";
+            }
         }
 
         function clicked(word) {
@@ -273,14 +335,14 @@
             <div id="progress" style="width: 10%; height: 3vh; background-color: #77C801;; border-radius: 1.5vh;"></div>
         </div>
     </div>
-    <div id="basePlate" class="container">
+    <!--Type 1 start-->
+    <div id="type1Top">
         <div style="font-weight: bold; margin: 1vh 0;  color: #555; font-size: 3.5vh;">Översätt meningen</div>
         <div id="svenskMening" style="font-weight: normal; margin: 1vh 0; color: #555; font-size: 3vh;"></div>
         <div id="output"></div>
     </div>
 
-
-    <div id="bottombottom">
+    <div id="type1Bottom">
         <div id="bottom" class="flex-container">
         </div>
         <div id="checkButton" class="activeButton" onclick="check();">FÄRDIG</div>
@@ -289,9 +351,22 @@
         style='position: fixed; top: 45vh; text-align: center; font-weight: bold; width: 100%; color: darkred; display: none; z-index: 1; '>
         INTE HELT RÄTT<br>FÖRSÖK IGEN
     </div>
+    <!--Type 1 end-->
+
+    <!--Type 2 start-->
+    <div id="type2Main">
+        <div style="font-weight: bold; margin: 1vh 2vh;  color: #555; font-size: 3.5vh;">Välj rätt översättning</div>
+        <div id="type2Word" style="font-weight: normal; margin: 1vh 2vh; color: #555; font-size: 3vh;"></div>
+
+        <div id="type2BoxContainer" style="margin-left: -1vh; display: flex; flex-wrap: wrap; justify-content: center;
+        align-items: center; width: 100%;">
+        </div>
+    </div>
+    <!--Type 2 end-->
+
     <div id="modal"
         style="display:none; position:fixed; left:0; top:0; right: 0; bottom: 0; z-index:1; overflow:auto; background-color:rgba(0,0,0,0.3);">
-        <div style='margin: 40vh auto; text-align: center; font-weight: bold; width: 80vw; color: green '>
+        <div style='margin: 40vh auto; text-align: center; font-weight: bold; width: 80vw; color: green; background-color:rgba(200,200,200,0.8); padding:3vh; border-radius: 3vh;'>
             RÄTT. BRA JOBBAT!
             <div id="nextWordButton" onclick="nextWord();" ;
                 style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: block;'>
