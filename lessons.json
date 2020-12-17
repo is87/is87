@@ -4,21 +4,25 @@
             "name": "Basics",
             "items": [
                 {
+                    "type": "1",
                     "words": "man se ketãb dãram",
                     "extraWords": "mã ketãbhã",
                     "sentence": "Jag har tre böcker."
                 },
                 {
+                    "type": "1",
                     "words": "hur mår ni",
                     "extraWords": "vem är varför har",
                     "sentence": "Hãl-e shomã chetor ast?"
                 },
                 {
+                    "type": "1",
                     "words": "mã kheyli khub hastim",
                     "extraWords": "shomã dãrim be yek",
                     "sentence": "Vi mår mycket bra."
                 },
                 {
+                    "type": "1",
                     "words": "ketãb -e man khub ast",
                     "extraWords": "mã kheyli hastam mikonad",
                     "sentence": "Min bok är bra."
@@ -29,11 +33,13 @@
             "name": "Klockan",
             "items": [
                 {
+                    "type": "1",
                     "words": "sã'at se o nim",
                     "extraWords": "chahãr daghighe panj",
                     "sentence": "Klockan halv fyra"
                 },
                 {
+                    "type": "1",
                     "words": "sã'at chand ast",
                     "extraWords": "nim daghighe che",
                     "sentence": "Vad är klockan?"
@@ -44,19 +50,39 @@
             "name": "Ezãfe",
             "items": [
                 {
+                    "type": "1",
                     "words": "mãshin -e man",
                     "extraWords": "-ye mã shomã",
                     "sentence": "Min bil."
                 },
                 {
+                    "type": "1",
                     "words": "khãne -ye bozorg -e to",
                     "extraWords": "-ye -e man khãnevãde",
                     "sentence": "Ditt stora hus."
                 },
                 {
+                    "type": "1",
                     "words": "sag -e kuchik -e mãdar -e mã",
                     "extraWords": "-ye -ye man bozorg",
                     "sentence": "Vår mammas lilla hund."
+                }
+            ]
+        },
+        {
+            "name": "Färger",
+            "items": [
+                {
+                    "type": "2",
+                    "words": "ghermez",
+                    "extraWords": "surati khãki zard",
+                    "sentence": "Röd"
+                },
+                {
+                    "type": "2",
+                    "words": "ãbi",
+                    "extraWords": "ghermez sabz sefid",
+                    "sentence": "Blå"
                 }
             ]
         }
