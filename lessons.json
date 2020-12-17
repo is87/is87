@@ -31,7 +31,12 @@
                 {
                     "words": "sã'at se o nim",
                     "extraWords": "chahãr daghighe panj",
-                    "sentence": "Klcockan halv fyra"
+                    "sentence": "Klockan halv fyra"
+                },
+                {
+                    "words": "sã'at chand ast",
+                    "extraWords": "nim daghighe che",
+                    "sentence": "Vad är klockan?"
                 }
             ]
         }

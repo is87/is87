@@ -86,9 +86,29 @@
             display: flex;
             flex-wrap: wrap;
         }
+
+        #lessonsMenuBackground{
+            display:block; position:fixed; left:0; top:0; right: 0; bottom: 0; z-index:1; overflow:auto; background-color:white;
+        }
+
+        #lessonsMenu{
+            margin: 10vh auto; text-align: center; font-weight: bold; width: 80vw; padding: 2vh; padding-top: 4vh; background-color: #FFF; border: 0.2vh solid #ccc; color: #555;
+        }
+
+        .lessonButton {
+            font-weight: 600;
+            text-align: center;
+            padding: 10px;
+
+            border-radius: 1vh;
+            margin: 4vh;
+            background-color: #77C801;
+            color: white;
+            box-shadow: 0px 0.8vh #63ad15;
+        }
     </style>
     <script>
-        var sentences = [["man se ketãb dãram", "mã ketãbhã", "Jag har tre böcker."], ["hur mår ni", "vem är varför har", "Hãl-e shomã chetor ast?"], ["mã kheyli khub hastim", "shomã dãrim be yek", "Vi mår mycket bra."], ["ketãb -e man khub ast", "mã kheyli hastam mikonad", "Min bok är bra."]];
+        var sentences = [];//[["man se ketãb dãram", "mã ketãbhã", "Jag har tre böcker."], ["hur mår ni", "vem är varför har", "Hãl-e shomã chetor ast?"], ["mã kheyli khub hastim", "shomã dãrim be yek", "Vi mår mycket bra."], ["ketãb -e man khub ast", "mã kheyli hastam mikonad", "Min bok är bra."]];
         var correctSentence = "man se ketãb dãram";
         var extraWords = "mã ketãbhã"
         //var words = ["ketãb", "se", "man", "dãram", "ketãbhã", "mã"];
@@ -96,9 +116,11 @@
         chosenWords = [];
         sentenceNr = 0;
         numberOfSentences = 0;
+        var data;
 
         function loadJSON() {
-            var url = "lessons.json";
+            //var url = "lessons.json";
+            var url = "https://is87.github.io/is87/lessons.json";
             fetch(url)
                 .then(function (response) {
                     return response.json();
@@ -107,23 +129,46 @@
                     data = myJson;
                     console.log("Data fetched.");
                     console.log(data);
+                    loadLessonMenu();
+                   //loadLessonNr(0);
                 });
+        }
+
+        function loadLessonMenu(){
+            document.getElementById("lessonsMenuBackground").style.display = "block";
+            document.getElementById("lessonsMenu").innerHTML = "LEKTIONER";
+            for(i=0;i<data.lessons.length;i++){
+                        document.getElementById("lessonsMenu").innerHTML += "<div data-index='"+i+"'' onclick='clickLesson(this);' class='lessonButton'>"+data.lessons[i].name+"</div>";
+                    }
+        }
+
+        function clickLesson(lesson) {
+            loadLessonNr(Number(lesson.getAttribute("data-index")));
+        }
+
+        function loadLessonNr(lessonNumber){
+            document.getElementById("lessonsMenuBackground").style.display = "none";
+                sentences = data.lessons[lessonNumber].items;
+                numberOfSentences = sentences.length;
+            document.getElementById("progress").style.width = "10%";
+            loadWord(sentences[0]);
         }
 
         function init() {
             loadJSON();
             /*words = correctSentence.split(" ").concat(extraWords.split(" "));
             words = words.sort(() => Math.random() - 0.5);*/
-            numberOfSentences = sentences.length;
+            /*numberOfSentences = sentences.length;
             document.getElementById("progress").style.width = "10%";
-            loadWord(sentences[0]);
+            loadWord(sentences[0]);*/
         }
 
         function loadWord(arr) {
-            words = arr[0].split(" ").concat(arr[1].split(" "));
+            document.getElementById("modal").style.display = "none";
+            words = arr["words"].split(" ").concat(arr["extraWords"].split(" "));
             words = words.sort(() => Math.random() - 0.5);
-            correctSentence = arr[0];
-            document.getElementById("svenskMening").innerText = arr[2];
+            correctSentence = arr["words"];
+            document.getElementById("svenskMening").innerText = arr["sentence"];
             bot = document.getElementById("bottom");
             bot.innerHTML = "";
             for (i = 0; i < words.length; i++) {
@@ -216,7 +261,8 @@
 
 <body onload="init();">
     <div
-        style="position: fixed; top:0; height:5vh; font-size: 2vh; text-align: center; left: 0; right:0; background-color: #fff; color: #77C801;">
+        style="position: fixed; top:0; height:5vh; font-size: 2vh; text-align: center; left: 0; right:0; background-color: #fff; color: #77C801; display:flex;">
+        <div style="margin: auto auto; background-color: rgb(204, 0, 61); padding:0.7vh; border-radius: 0.5vh; color: white; font-size: 1vh; text-align: center; box-shadow: 0px 0.3vh rgb(174, 0, 31); font-weight: 600;" onclick="loadLessonMenu();">AVBRYT LEKTION</div>
         <div style="width: 50vw; margin: 1vh auto; height: 3vh; background-color: #ccc; border-radius: 1.5vh;">
             <div id="progress" style="width: 10%; height: 3vh; background-color: #77C801;; border-radius: 1.5vh;"></div>
         </div>
@@ -244,11 +290,14 @@
             <div id="nextWordButton" onclick="nextWord();" ;
                 style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: block;'>
                 NÄSTA</div>
-            <div id="lessonFinishedButton" onclick="lessonFinished();" ;
+            <div id="lessonFinishedButton" onclick="loadLessonMenu();" ;
                 style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: none;'>
                 NYA UTMANINGAR</div>
         </div>
 
+    </div>
+    <div id="lessonsMenuBackground">
+        <div id="lessonsMenu"></div>
     </div>
 </body>
 
