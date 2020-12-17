@@ -151,7 +151,8 @@
                 sentences = data.lessons[lessonNumber].items;
                 numberOfSentences = sentences.length;
             document.getElementById("progress").style.width = "10%";
-            loadWord(sentences[0]);
+            sentenceNr = 0;
+            loadWord(sentences[sentenceNr]);
         }
 
         function init() {
