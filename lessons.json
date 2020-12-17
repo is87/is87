@@ -39,6 +39,12 @@
                     "sentence": "Klockan halv fyra"
                 },
                 {
+                    "type": "2",
+                    "words": "rob",
+                    "extraWords": "nim sã'at daghighe",
+                    "sentence": "Kvart"
+                },
+                {
                     "type": "1",
                     "words": "sã'at chand ast",
                     "extraWords": "nim daghighe che",
