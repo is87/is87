@@ -2,8 +2,10 @@
 <html>
 
 <head>
+    <title>Lär dig persiska med Ståhls språkmaskin</title>
     <meta charset="utf-8">
     <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -95,16 +97,38 @@
             flex-wrap: wrap;
         }
 
-        #lessonsMenuBackground{
-            display:block; position:fixed; left:0; top:0; right: 0; bottom: 0; z-index:1; overflow:auto; background-color:white;
+        #lessonsMenuBackground {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            overflow: auto;
+            background-color: white;
         }
 
-        #lessonsMenu{
-            margin: 5vh auto; text-align: center; font-weight: bold; width: 80vw; padding: 2vh; padding-top: 4vh; background-color: #FFF; border: 0.2vh solid #ccc; color: #555;
+        #lessonsMenu {
+            margin: 5vh auto;
+            text-align: center;
+            font-weight: bold;
+            width: 80vw;
+            padding: 2vh;
+            padding-top: 4vh;
+            background-color: #FFF;
+            border: 0.2vh solid #ccc;
+            color: #555;
         }
 
-        #lessonsMenuTitle{
-            margin: 0; text-align: center; font-weight: bold; padding: 1vh; background-color: #2b2f34; box-shadow: 0px 0.3vh #bbb; color: #eee;
+        #lessonsMenuTitle {
+            margin: 0;
+            text-align: center;
+            font-weight: bold;
+            padding: 1vh;
+            background-color: #2b2f34;
+            box-shadow: 0px 0.3vh #bbb;
+            color: #eee;
         }
 
         .lessonButton {
@@ -119,18 +143,30 @@
             box-shadow: 0px 0.8vh #63ad15;
         }
 
-        .optionBox{
+        .lessonButton i {
+            color: yellow;
+            position: relative;
+            float: right;
+        }
+
+        .lessonButton i:nth-child(1) {
+            color: yellow;
+            position: relative;
+            float: left;
+            visibility: hidden;
+        }
+
+        .optionBox {
             width: 40%;
             background-color: #fff;
             color: #333;
             text-align: center;
             margin: 2vh;
-            padding:5vh 0;
+            padding: 5vh 0;
             border-radius: 1vh;
             border: 0.3vh solid #ddd;
             box-shadow: 0 0.5vh #ddd;
         }
-
     </style>
     <script>
         var sentences = [];//[["man se ketãb dãram", "mã ketãbhã", "Jag har tre böcker."], ["hur mår ni", "vem är varför har", "Hãl-e shomã chetor ast?"], ["mã kheyli khub hastim", "shomã dãrim be yek", "Vi mår mycket bra."], ["ketãb -e man khub ast", "mã kheyli hastam mikonad", "Min bok är bra."]];
@@ -142,6 +178,7 @@
         sentenceNr = 0;
         numberOfSentences = 0;
         var data;
+        var activeLesson;
 
         function loadJSON() {
             //var url = "lessons.json";
@@ -155,26 +192,49 @@
                     console.log("Data fetched.");
                     console.log(data);
                     loadLessonMenu();
-                   //loadLessonNr(0);
+                    //loadLessonNr(0);
                 });
         }
 
-        function loadLessonMenu(){
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + encodeURIComponent(cvalue) + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return decodeURIComponent(c.substring(name.length, c.length));
+                }
+            }
+            return "";
+        }
+
+        function loadLessonMenu() {
             document.getElementById("lessonsMenuBackground").style.display = "block";
             document.getElementById("lessonsMenu").innerHTML = "LEKTIONER";
-            for(i=0;i<data.lessons.length;i++){
-                        document.getElementById("lessonsMenu").innerHTML += "<div data-index='"+i+"'' onclick='clickLesson(this);' class='lessonButton'>"+data.lessons[i].name+"</div>";
-                    }
+            for (i = 0; i < data.lessons.length; i++) {
+                document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
+            }
         }
 
         function clickLesson(lesson) {
             loadLessonNr(Number(lesson.getAttribute("data-index")));
         }
 
-        function loadLessonNr(lessonNumber){
+        function loadLessonNr(lessonNumber) {
+            activeLesson = data.name;
             document.getElementById("lessonsMenuBackground").style.display = "none";
-                sentences = data.lessons[lessonNumber].items;
-                numberOfSentences = sentences.length;
+            sentences = data.lessons[lessonNumber].items;
+            numberOfSentences = sentences.length;
             document.getElementById("progress").style.width = "10%";
             sentenceNr = 0;
             loadWord(sentences[sentenceNr]);
@@ -194,11 +254,11 @@
             document.getElementById("type1Top").style.display = "none";
             document.getElementById("type1Bottom").style.display = "none";
             document.getElementById("type2Main").style.display = "none";
-            if(arr["type"] == "1")loadWordType1(arr);
-            if(arr["type"] == "2")loadWordType2(arr);
+            if (arr["type"] == "1") loadWordType1(arr);
+            if (arr["type"] == "2") loadWordType2(arr);
         }
 
-        function loadWordType1(arr){
+        function loadWordType1(arr) {
             document.getElementById("type1Top").style.display = "block";
             document.getElementById("type1Bottom").style.display = "block";
             words = arr["words"].split(" ").concat(arr["extraWords"].split(" "));
@@ -214,7 +274,7 @@
             update();
         }
 
-        function loadWordType2(arr){
+        function loadWordType2(arr) {
             document.getElementById("type2Main").style.display = "block";
             document.getElementById("type2Word").innerText = arr["sentence"];
             words = arr["words"].split(" ").concat(arr["extraWords"].split(" "));
@@ -224,26 +284,31 @@
             correctSentence = arr["words"];
             document.getElementById("type2Word").innerText = arr["sentence"];
             document.getElementById("type2BoxContainer").innerHTML = "";
-            for(i = 0; i<words.length;i++){
-                document.getElementById("type2BoxContainer").innerHTML += "<div onclick='optionClick(this);' class='optionBox'>"+words[i]+"</div>";
+            for (i = 0; i < words.length; i++) {
+                document.getElementById("type2BoxContainer").innerHTML += "<div onclick='optionClick(this);' class='optionBox'>" + words[i] + "</div>";
             }
         }
 
-        function optionClick(word){
-            if(word.innerText == correctSentence){
+        function optionClick(word) {
+            if (word.innerText == correctSentence) {
                 word.style.color = "green";
                 document.getElementById("progress").style.width = 10 + ((sentenceNr + 1) / numberOfSentences) * 90 + "%";
-                    document.getElementById("modal").style.display = "block";
-                    document.getElementById("lessonFinishedButton").style.display = "none";
-                    document.getElementById("nextWordButton").style.display = "none";
-                    if (sentenceNr + 1 == numberOfSentences) {
-                        document.getElementById("lessonFinishedButton").style.display = "block";
-                    } else {
-                        document.getElementById("nextWordButton").style.display = "block";
-                    }
-            }else{
+                document.getElementById("modal").style.display = "block";
+                document.getElementById("lessonFinishedButton").style.display = "none";
+                document.getElementById("nextWordButton").style.display = "none";
+                if (sentenceNr + 1 == numberOfSentences) {
+                    lessonFinished();
+                } else {
+                    document.getElementById("nextWordButton").style.display = "block";
+                }
+            } else {
                 word.style.color = "darkred";
             }
+        }
+
+        function lessonFinished(){
+            document.getElementById("lessonFinishedButton").style.display = "block";
+            setCookie("lesson-"+activeLesson, "DONE", 365);
         }
 
         function clicked(word) {
@@ -280,7 +345,7 @@
                     document.getElementById("lessonFinishedButton").style.display = "none";
                     document.getElementById("nextWordButton").style.display = "none";
                     if (sentenceNr + 1 == numberOfSentences) {
-                        document.getElementById("lessonFinishedButton").style.display = "block";
+                        lessonFinished();
                     } else {
                         document.getElementById("nextWordButton").style.display = "block";
                     }
@@ -330,7 +395,8 @@
 <body onload="init();">
     <div
         style="position: fixed; top:0; height:5vh; font-size: 2vh; text-align: center; left: 0; right:0; background-color: #fff; color: #77C801; display:flex;">
-        <div style="margin: auto auto; background-color: rgb(204, 0, 61); padding:0.7vh; border-radius: 0.5vh; color: white; font-size: 1vh; text-align: center; box-shadow: 0px 0.3vh rgb(174, 0, 31); font-weight: 600;" onclick="loadLessonMenu();">AVBRYT LEKTION</div>
+        <div style="margin: auto auto; background-color: rgb(204, 0, 61); padding:0.7vh; border-radius: 0.5vh; color: white; font-size: 1vh; text-align: center; box-shadow: 0px 0.3vh rgb(174, 0, 31); font-weight: 600;"
+            onclick="loadLessonMenu();">AVBRYT LEKTION</div>
         <div style="width: 50vw; margin: 1vh auto; height: 3vh; background-color: #ccc; border-radius: 1.5vh;">
             <div id="progress" style="width: 10%; height: 3vh; background-color: #77C801;; border-radius: 1.5vh;"></div>
         </div>
@@ -366,7 +432,8 @@
 
     <div id="modal"
         style="display:none; position:fixed; left:0; top:0; right: 0; bottom: 0; z-index:1; overflow:auto; background-color:rgba(0,0,0,0.3);">
-        <div style='margin: 40vh auto; text-align: center; font-weight: bold; width: 80vw; color: green; background-color:rgba(200,200,200,0.8); padding:3vh; border-radius: 3vh;'>
+        <div
+            style='margin: 40vh auto; text-align: center; font-weight: bold; width: 80vw; color: green; background-color:rgba(200,200,200,0.8); padding:3vh; border-radius: 3vh;'>
             RÄTT. BRA JOBBAT!
             <div id="nextWordButton" onclick="nextWord();" ;
                 style='text-align: center; font-weight: bold; padding: 1vh; color: #333; background-color: white; margin: 3vh; border-radius: 1vh; box-shadow: 0px 0.8vh #ccc; display: block;'>
@@ -378,7 +445,8 @@
 
     </div>
     <div id="lessonsMenuBackground">
-        <div id="lessonsMenuTitle">STÅHLS SPRÅKMASKIN<br><span style="font-size: smaller;">- PERSISKA PÅ RIKTIGT -</span></div>
+        <div id="lessonsMenuTitle">STÅHLS SPRÅKMASKIN<br><span style="font-size: smaller;">- PERSISKA PÅ RIKTIGT
+                -</span></div>
         <div id="lessonsMenu"></div>
     </div>
 </body>
