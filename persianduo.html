@@ -222,7 +222,11 @@
             document.getElementById("lessonsMenuBackground").style.display = "block";
             document.getElementById("lessonsMenu").innerHTML = "LEKTIONER";
             for (i = 0; i < data.lessons.length; i++) {
-                document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
+                if (getCookie("lesson-" + data.lessons[i].name) == "DONE") {
+                    document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
+                } else {
+                    document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star' style='visibility:hidden;'></i></div>";
+                }
             }
         }
 
@@ -231,7 +235,8 @@
         }
 
         function loadLessonNr(lessonNumber) {
-            activeLesson = data.name;
+            activeLesson = data.lessons[lessonNumber].name;
+            console.log(activeLesson);
             document.getElementById("lessonsMenuBackground").style.display = "none";
             sentences = data.lessons[lessonNumber].items;
             numberOfSentences = sentences.length;
@@ -306,9 +311,9 @@
             }
         }
 
-        function lessonFinished(){
+        function lessonFinished() {
             document.getElementById("lessonFinishedButton").style.display = "block";
-            setCookie("lesson-"+activeLesson, "DONE", 365);
+            setCookie("lesson-" + activeLesson, "DONE", 365);
         }
 
         function clicked(word) {
