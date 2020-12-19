@@ -31,6 +31,30 @@
             ]
         },
         {
+            "name": "Bokstäver",
+            "id": "9",
+            "items": [
+                {
+                    "type": "2",
+                    "words": "ا",
+                    "extraWords": "ل ه ب",
+                    "sentence": "Alef"
+                },
+                {
+                    "type": "2",
+                    "words": "خ",
+                    "extraWords": "ح ج چ",
+                    "sentence": "Khe"
+                },
+                {
+                    "type": "2",
+                    "words": "س",
+                    "extraWords": "ی م ک",
+                    "sentence": "Sin"
+                }
+            ]
+        },
+        {
             "name": "Klockan",
             "id": "2",
             "items": [
@@ -117,6 +141,20 @@
         {
             "name": "Konjunktiv",
             "id": "6",
+            "items": [
+                
+            ]
+        },
+        {
+            "name": "Rã",
+            "id": "7",
+            "items": [
+                
+            ]
+        },
+        {
+            "name": "Komparativ",
+            "id": "8",
             "items": [
                 
             ]
