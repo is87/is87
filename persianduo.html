@@ -181,6 +181,7 @@
         var data;
         var activeLesson;
         var activeLessonID = "0";
+        var errorsInLesson = 0;
 
         function loadJSON() {
             //var url = "lessons.json";
@@ -227,6 +228,10 @@
                 document.getElementById("lessonsMenu").innerHTML += "<div id='lessonButton"+i+"' data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
                 if (getCookie("lesson-" + data.lessons[i].id) == "DONE") {
                     document.getElementById("lessonButton"+i).lastElementChild.style.visibility = "visible";
+                    document.getElementById("lessonButton"+i).lastElementChild.className = "fa fa-star-o";
+                }
+                if(getCookie("lesson-" + data.lessons[i].id) == "PERFECT"){
+                    document.getElementById("lessonButton"+i).lastElementChild.style.visibility = "visible";
                 }
                 if(data.lessons[i].items.length == 0){
                     document.getElementById("lessonButton"+i).style.filter="grayscale(100%)";
@@ -240,6 +245,7 @@
         }
 
         function loadLessonNr(lessonNumber) {
+            errorsInLesson = 0;
             activeLesson = data.lessons[lessonNumber].name;
             activeLessonID = data.lessons[lessonNumber].id;
             console.log(activeLesson);
@@ -313,13 +319,20 @@
                     document.getElementById("nextWordButton").style.display = "block";
                 }
             } else {
+                errorsInLesson++;
                 word.style.color = "darkred";
             }
         }
 
         function lessonFinished() {
             document.getElementById("lessonFinishedButton").style.display = "block";
-            setCookie("lesson-" + activeLessonID, "DONE", 365);
+            if(errorsInLesson==0){
+                setCookie("lesson-" + activeLessonID, "PERFECT", 365);
+                console.log("Perfect score");
+            }else{
+                setCookie("lesson-" + activeLessonID, "DONE", 365);
+            }
+            
         }
 
         function clicked(word) {
@@ -362,6 +375,7 @@
                     }
                 } else {
                     console.log("FALSE");
+                    errorsInLesson++;
                     document.getElementById("fel").style.display = "block";
                     setTimeout(hideFel, 2000);
                 }
