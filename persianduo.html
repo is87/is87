@@ -147,6 +147,7 @@
             color: yellow;
             position: relative;
             float: right;
+            visibility: hidden;
         }
 
         .lessonButton i:nth-child(1) {
@@ -223,10 +224,13 @@
             document.getElementById("lessonsMenuBackground").style.display = "block";
             document.getElementById("lessonsMenu").innerHTML = "LEKTIONER";
             for (i = 0; i < data.lessons.length; i++) {
+                document.getElementById("lessonsMenu").innerHTML += "<div id='lessonButton"+i+"' data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
                 if (getCookie("lesson-" + data.lessons[i].id) == "DONE") {
-                    document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
-                } else {
-                    document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star' style='visibility:hidden;'></i></div>";
+                    document.getElementById("lessonButton"+i).lastElementChild.style.visibility = "visible";
+                }
+                if(data.lessons[i].items.length == 0){
+                    document.getElementById("lessonButton"+i).style.filter="grayscale(100%)";
+                    document.getElementById("lessonButton"+i).onclick = null;
                 }
             }
         }

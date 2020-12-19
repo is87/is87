@@ -113,6 +113,13 @@
                     "sentence": "Fem"
                 }
             ]
+        },
+        {
+            "name": "Konjunktiv",
+            "id": "6",
+            "items": [
+                
+            ]
         }
     ]
 }
