@@ -235,13 +235,17 @@
                 }
                 if(data.lessons[i].items.length == 0){
                     document.getElementById("lessonButton"+i).style.filter="grayscale(100%)";
-                    document.getElementById("lessonButton"+i).onclick = null;
                 }
             }
         }
 
         function clickLesson(lesson) {
-            loadLessonNr(Number(lesson.getAttribute("data-index")));
+            index = Number(lesson.getAttribute("data-index"));
+            if(data.lessons[index].items.length != 0){
+                loadLessonNr(index);
+            }else{
+                console.log("Lesson is empty");
+            }
         }
 
         function loadLessonNr(lessonNumber) {
