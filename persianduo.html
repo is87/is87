@@ -242,8 +242,8 @@
         function eraseCookies(){
             for(i=0;i< data.lessons.length;i++){
                 setCookie("lesson-"+data.lessons[i].id, "", -10);
-                loadLessonMenu();
             }
+            loadLessonMenu();
         }
         function loadLessonMenu() {
             document.getElementById("lessonsMenuBackground").style.display = "block";
@@ -527,8 +527,7 @@
 
     </div>
     <div id="lessonsMenuBackground">
-        <div id="lessonsMenuTitle">Ståhls språkmaskin<br><span style="font-size: smaller;">- persiska
-                -</span>
+        <div id="lessonsMenuTitle">Ståhls språkmaskin<br><span style="font-size: smaller;">Persiska</span>
                 <i onclick="showSettings();" class="fa fa-cog" aria-hidden="true" style="position: relative; float: right; right: 1vh; top: -1vh;"></i>
             </div>
         <div id="lessonsMenu"></div>
