@@ -2,6 +2,7 @@
     "lessons": [
         {
             "name": "Basics",
+            "id": "1",
             "items": [
                 {
                     "type": "1",
@@ -31,6 +32,7 @@
         },
         {
             "name": "Klockan",
+            "id": "2",
             "items": [
                 {
                     "type": "1",
@@ -54,6 +56,7 @@
         },
         {
             "name": "Ezãfe",
+            "id": "3",
             "items": [
                 {
                     "type": "1",
@@ -77,6 +80,7 @@
         },
         {
             "name": "Färger",
+            "id": "4",
             "items": [
                 {
                     "type": "2",
@@ -94,6 +98,7 @@
         },
         {
             "name": "Siffror",
+            "id": "5",
             "items": [
                 {
                     "type": "2",

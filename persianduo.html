@@ -179,6 +179,7 @@
         numberOfSentences = 0;
         var data;
         var activeLesson;
+        var activeLessonID = "0";
 
         function loadJSON() {
             //var url = "lessons.json";
@@ -222,7 +223,7 @@
             document.getElementById("lessonsMenuBackground").style.display = "block";
             document.getElementById("lessonsMenu").innerHTML = "LEKTIONER";
             for (i = 0; i < data.lessons.length; i++) {
-                if (getCookie("lesson-" + data.lessons[i].name) == "DONE") {
+                if (getCookie("lesson-" + data.lessons[i].id) == "DONE") {
                     document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star'></i></div>";
                 } else {
                     document.getElementById("lessonsMenu").innerHTML += "<div data-index='" + i + "'' onclick='clickLesson(this);' class='lessonButton'><i class='fa fa-star'></i><span>" + data.lessons[i].name + "</span><i class='fa fa-star' style='visibility:hidden;'></i></div>";
@@ -236,6 +237,7 @@
 
         function loadLessonNr(lessonNumber) {
             activeLesson = data.lessons[lessonNumber].name;
+            activeLessonID = data.lessons[lessonNumber].id;
             console.log(activeLesson);
             document.getElementById("lessonsMenuBackground").style.display = "none";
             sentences = data.lessons[lessonNumber].items;
