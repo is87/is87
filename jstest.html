@@ -7,7 +7,12 @@
 <style>
   html{
     box-sizing: border-box;
-  
+
+  }
+
+  a {
+    text-decoration: none;
+    color: #4a6da7;
   }
 
 .knapp{
@@ -22,14 +27,14 @@
 
 </style>
 <body style="background-color: #ECEAE7; font-family:Arial; padding:0; margin:0; color:#4a6da7;" onload="start()">
-    <div style="width:100%; background-color: #373433; height: 40px; text-align:center; line-height:40px; box-shadow: 0px 2px 1px #999;"> 
-      <span style="color:#fff; margin:0; font-weight: bold; font-size: 20pt;">Persian verbs</span>   
-      
+    <div style="width:100%; background-color: #373433; height: 40px; text-align:center; line-height:40px; box-shadow: 0px 2px 1px #999;">
+      <span style="color:#fff; margin:0; font-weight: bold; font-size: 20pt;">Persian verbs</span>
+
     </div>
 
     <div id="mainBox" style="width: 100%; overflow:auto; position: absolute; left:0px; top: 40px; bottom: 40px; padding-top: 50px;">
-    
-    
+
+
     <center>
         <div id="txt2" style="font-size: 70pt; font-family: 'Scheherazade', serif;"></div>
         <div id="latinText" style="font-size: 30pt; position: relative; top:-20px;"></div><br/>
@@ -38,8 +43,8 @@
         <div class="knapp" id="b3"  onclick="check(2);">Word 3</div><br/>
         <div class="knapp" id="b4"  onclick="check(3);">Word 4</div>
     <br><br><div style="visibility:hidden;" class="knapp" id="btn" onclick="start()">Next word ></div>
-        
-            
+
+
     </div>
 </center>
 </div>
@@ -51,7 +56,7 @@
     <div id="wrong" style="background-color:#ed553b; height: 30px; left: 5px; position:fixed; right: 5px; bottom: 5px;">
         <div id="right" style="background-color:#4fb99f; width: 50%; height: 100%;"></div>
       </div>
-    
+
 </div>
     <script>
         var rounds = 0;
@@ -79,12 +84,12 @@
       if(playing){
 			rounds++;
 			if(nr == siffra){
-                document.getElementById("txt2").style.color = "#4fb99f";
-                document.getElementById("latinText").style.color = "#4fb99f";
+                document.getElementById("txt2").firstChild.style.color = "#4fb99f";
+                document.getElementById("latinText").firstChild.style.color = "#4fb99f";
                 correct++;
 			}else{
-				document.getElementById("txt2").style.color = "#ed553b";
-        document.getElementById("latinText").style.color = "#ed553b";
+				document.getElementById("txt2").firstChild.style.color = "#ed553b";
+        document.getElementById("latinText").firstChild.style.color = "#ed553b";
 			}
             for(i=0;i<4;i++){
                 bt[i].style.color = "#999";
@@ -107,19 +112,19 @@
             document.getElementById("latinText").style.color = "#4a6da7";
             document.getElementById("latinText").style.fontSize = "30pt";
 			document.getElementById("btn").style.visibility = "hidden";
-			
+
             varr = shuffle(verb);
             siffra = Math.floor((Math.random() * 4));
-            document.getElementById("txt2").innerHTML = varr[siffra].Persian;
+            document.getElementById("txt2").innerHTML = "<a target='_blank' href='https://www.jahanshiri.ir/pvc/en/?verb="+ varr[siffra].Persian + "'>"+varr[siffra].Persian+"</a>";
             //if(latinHelp)document.getElementById("txt2").innerHTML += " ("+varr[siffra].Pronunciation+")";
-            document.getElementById("latinText").innerHTML = varr[siffra].Pronunciation;
+            document.getElementById("latinText").innerHTML = "<a target='_blank' href='https://www.jahanshiri.ir/pvc/en/?verb="+ varr[siffra].Pronunciation + "'>"+varr[siffra].Pronunciation+"</a>";
             document.getElementById("latinText").style.fontSize = "30pt";
             document.getElementById("b1").innerHTML = varr[0].English;
             document.getElementById("b2").innerHTML = varr[1].English;
             document.getElementById("b3").innerHTML = varr[2].English;
             document.getElementById("b4").innerHTML = varr[3].English;
             playing = true;
-			
+
 		}
 
         function shuffle(a) {
@@ -129,7 +134,7 @@
             }
             return a;
         }
-        
+
         var verb = [
   {
     "Persian": "آمدن",
